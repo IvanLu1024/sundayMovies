@@ -43,7 +43,7 @@ object MySQLDemo01 {
     prop.put("user","root")
     prop.put("password","123456")
     //化悲愤数据追加到数据库
-    itemDF.write.mode("append").jdbc("jdbc:mysql://localhost:3306/big_data","big_data.item_film",prop)
+    itemDF.write.mode(SaveMode.Overwrite).jdbc("jdbc:mysql://localhost:3306/big_data","big_data.item_film",prop)
 
 
     sc.stop()
