@@ -24,7 +24,9 @@ object ALSRecommendation {
     //将评分矩阵RDD转化为Rating格式的RDD
     val ratings = rawRatings.map{case Array(user,movie,rating)=>Rating(user.toInt,movie.toInt,rating.toDouble)}
     /*训练推荐模型--ALS*/
-    val model = ALS.train(ratings,50,10,0.01)
+    val model = ALS.train(ratings,50,15,0.01)
+    model.save(sc,"/model")
+
     //使用ALS推荐模型
     val predictedRating = model.predict(789,123)
     println("预测评分："+predictedRating)
@@ -32,6 +34,8 @@ object ALSRecommendation {
     val K=10
     val topKRecs = model.recommendProducts(userId,K)
     println(topKRecs.mkString("\n"))
+
+
     /*初步检验推荐效果
     *
     * */

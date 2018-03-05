@@ -12,7 +12,7 @@ object connectDataBaseUtil {
     prop.put("user","root")
     prop.put("password","123456")
     //将数据追加到数据库
-    dataFrame.write.mode(SaveMode.Append).jdbc("jdbc:mysql://localhost:3306/big_data","big_data."+tableName,prop)
+    dataFrame.write.mode(SaveMode.Overwrite).jdbc("jdbc:mysql://localhost:3306/big_data","big_data."+tableName,prop)
 
   }
 

@@ -36,12 +36,14 @@ object RecommendationJDBCDemo {
     val model = ALS.train(ratings, 50, 10, 0.01)
     //使用ALS推荐模型
     val predictedRating = model.predict(789, 123)
+
+    model.userFeatures.unpersist()
     println("用户789对于电影123的预测评分为：" + predictedRating)
     val userId = 789
     val K = 10
     val topKRecs = model.recommendProducts(userId, K).toList
 
-    val recsTup = topKRecs.map(x=>(x.user.toInt,x.product.toInt,x.rating.toDouble))
+    val recsTup = topKRecs.map(x=>recs_Table(x.user.toInt,x.product.toInt,x.rating.toDouble))
 
     //将RDD直接转换为DataFrame
     import sqlContext.implicits._
@@ -130,3 +132,4 @@ object RecommendationJDBCDemo {
 
   }
 }
+case class recs_Table(userId:Int,filmId:Int,rate:Double)
